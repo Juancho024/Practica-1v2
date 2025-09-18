@@ -11,14 +11,13 @@ public class Main {
         long ini = System.nanoTime();
         System.out.println("Tiempo Inicial en ns: "+ini);
         System.out.println("Tiempo Inicial en ms: "+(ini/1000000.0));
-        boolean[] primos = validarPrimos(valor);
         long fin = System.nanoTime();
 
         System.out.println("Los numeros Primos de "+valor);
         for(int i = 2; i <= valor; i++) {
-            if(primos[i] && i == 2) {
+            if(validarPrimos(i) && i == 3) {
                 System.out.printf(""+i);
-            } else if(primos[i] && i != 2) {
+            } else if(validarPrimos(i) && i != 2) {
                 System.out.printf(","+ i);
             }
         }
@@ -29,21 +28,18 @@ public class Main {
         input.close();
 
     }
-    public static boolean[] validarPrimos(int valor) {
-        boolean[] validar = new boolean[valor + 1];
-
-        for (int i = 2; i <= valor; i++) {
-            validar[i] = true;
+    public static boolean validarPrimos(int n) {
+        if (n <= 1) {
+            return false;
         }
-
-        for (int p = 2; p * p <= valor; p++) {
-            if (validar[p]) {
-                for (int multiplo = p * p; multiplo <= valor; multiplo += p) {
-                    validar[multiplo] = false;
-                }
+        if (n % 2 == 0) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
             }
         }
-
-        return validar;
+        return true;
     }
 }
